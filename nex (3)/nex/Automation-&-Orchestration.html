@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Incident Response</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script>
+    window.onload = () => {
+      AOS.init();
+    };
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Orbitron', sans-serif; background-color: #000; color: #fff; overflow-x: hidden; }
+    header { background-color: #000; display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; position: fixed; width: 100%; z-index: 10; }
+    .logo { display: flex; align-items: center; gap: 2px; font-size: 24px; letter-spacing: 3px; font-weight: bold; }
+    .logo-svg { width: 40px; height: 40px; }
+    .logo-text { font-size: 24px; letter-spacing: 3px; font-weight: bold; }
+    nav { position: relative; }
+    nav ul { display: flex; list-style: none; }
+    nav ul li { position: relative; }
+    nav a { color: white; margin: 0 8px; text-decoration: none; font-size: 14px; padding: 10px; display: inline-block; }
+    .btn { padding: 8px 15px; background-color: transparent; border: 1px solid white; color: white; text-transform: uppercase; font-size: 12px; cursor: pointer; }
+    .mega-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: auto; min-width: 200px; background-color: #fff; color: #000; padding: 20px 25px; box-shadow: 0 8px 16px rgba(0,0,0,0.3); z-index: 1000; display: none; gap: 0; justify-content: center; white-space: nowrap; }
+    nav ul li:hover > .mega-menu { display: flex; }
+    .mega-column { text-align: left; padding: 0 24px; flex: 1 1 0; min-width: 180px; }
+    .mega-divider { width: 1.5px; background: #e0e0e0; height: 100%; align-self: stretch; margin: 0 10px; }
+    .mega-menu .mega-column:not(:last-child) { border-right: 1.5px solid #e0e0e0; margin-right: 20px; padding-right: 20px; }
+    .mega-column h4 { color: #007bff; font-size: 15px; font-weight: 600; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+    .mega-column a { display: block; color: #333; font-size: 14px; font-weight: normal; text-decoration: none; margin: 2px 0; padding: 4px 0; transition: color 0.3s ease; line-height: 1.1; letter-spacing: 0.2px; }
+    .mega-column a:hover { color: #007bff; font-weight: 500; }
+    footer { padding: 80px 60px; background-color: #000; display: flex; justify-content: space-between; flex-wrap: wrap; color: #bbb; }
+    footer div { margin-bottom: 20px; }
+    footer h4 { text-transform: uppercase; font-size: 14px; color: #ccc; }
+    footer a { display: block; color: #888; text-decoration: none; font-size: 13px; margin-top: 5px; }
+    .footer-logo { margin-top: 40px; display: flex; align-items: center; gap: 12px; }
+    .footer-logo-svg { width: 30px; height: 30px; }
+    .footer-logo-text { font-size: 18px; letter-spacing: 2px; font-weight: bold; }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; }
+    .footer-content { display: flex; gap: 60px; }
+    .social-icons { display: flex; gap: 15px; }
+    .social-icon { width: 40px; height: 40px; border-radius: 50%; background-color: #333; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s ease; cursor: pointer; }
+    .social-icon:hover { background-color: #007bff; }
+    .social-icon svg { width: 20px; height: 20px; fill: white; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">
+      <svg class="logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#ffffff" stroke-width="4">
+        <path d="M100,70 Q100,90 80,100 Q100,110 100,130 Q100,110 120,100 Q100,90 100,70 Z" fill="none" />
+        <g transform="rotate(0, 100, 100)"><ellipse cx="100" cy="100" rx="60" ry="30" /></g>
+        <g transform="rotate(45, 100, 100)"><ellipse cx="100" cy="100" rx="60" ry="30" /></g>
+        <g transform="rotate(90, 100, 100)"><ellipse cx="100" cy="100" rx="60" ry="30" /></g>
+        <g transform="rotate(135, 100, 100)"><ellipse cx="100" cy="100" rx="60" ry="30" /></g>
+      </svg>
+      <span class="logo-text">Loghive</span>
+    </a>
+    <nav>
+      <ul>
+        <li>
+          <a href="#">WHAT WE DO</a>
+          <div class="mega-menu">
+            <div class="mega-column">
+              <a href="proactive-soc.html" style="display:block; font-size:15px; font-weight:600; margin-bottom:12px; text-transform:uppercase; letter-spacing:1px; color:#007bff; text-decoration:none;">Pro-Active SOC Defense</a>
+              <a href="24-7-detection-and-response.html">24/7 Detection & Response</a>
+              <a href="#">Incident Response</a>
+              <a href="remote-workspace-protection.html">Remote Workforce Protection</a>
+              <a href="threat-intelligence.html">Threat Intelligence Services</a>
+              <a href="Automation-&-Orchestration.html">Automation & Orchestration</a>
+            </div>
+            <div class="mega-divider"></div>
+            <div class="mega-column">
+              <h4>Managed Services</h4>
+              <a href="#">Managed SIEM</a>
+              <a href="#">Managed EDR</a>
+              <a href="#">Risk Assessment</a>
+              <a href="#">Cyber Posture</a>
+              <a href="#">Breach & Attack Simulation</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#">WHY LOGHIVE</a>
+          <div class="mega-menu" style="min-width: 750px; width: auto;">
+            <div class="mega-column">
+              <h4>SOLUTION</h4>
+              <a href="#">ENDPOINT PROTECTION</a>
+              <a href="#">ZERO TRUST SOLUTION</a>
+              <a href="#">SECURE CLOUD</a>
+              <a href="#">NEXT GEN SIEM + SOAR</a>
+              <a href="#">XDR SOLUTION</a>
+            </div>
+            <div class="mega-divider"></div>
+            <div class="mega-column">
+              <h4>HOW WE HELP</h4>
+              <a href="#">SECURE STARTUPS</a>
+              <a href="#">REPLACE MSSP</a>
+              <a href="#">APT PROTECTION</a>
+              <a href="#">POLICIES & CLAIMS</a>
+              <a href="#">THREAT DETECTION & INVESTIGATION</a>
+              <a href="#">RANSOMWARE PROTECTION</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#">COMPANY</a>
+          <div class="mega-menu">
+            <div class="mega-column">
+              <a href="#">OVERVIEW</a>
+              <a href="#">WHO WE ARE</a>
+              <a href="#">RECOGNITIONS</a>
+              <a href="#">CAREERS</a>
+              <a href="#">CONTACT</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#">RESOURCES</a>
+          <div class="mega-menu">
+            <div class="mega-column">
+              <a href="#">BLOG</a>
+              <a href="#">EVENTS</a>
+              <a href="#">CASE STUDY</a>
+            </div>
+          </div>
+        </li>
+        <li>
+          <a href="#">PARTNERS</a>
+          <div class="mega-menu">
+            <div class="mega-column">
+              <a href="#">OUR PARTNERS</a>
+              <a href="#">APPLY NOW</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+    <button class="btn">Get a Demo</button>
+  </header>
+  <!-- Main content sections (placeholders) -->
+  <main>
+    <!-- Section 1: Hero/Overlay (replace with Incident Response content) -->
+    <section style="position:relative; background: none; min-height: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+      <img src="auto.png" alt="Automation and Orchestration" class="absolute inset-0 w-full h-full object-cover z-0" style="opacity:0.7; pointer-events:none;" />
+      <div style="width: 100%; padding: 80px 0; position:relative; z-index:1;">
+        <h1 style="font-size: 48px; color: #fff; font-family: 'Orbitron', sans-serif; font-weight: 700; letter-spacing: 2px;">AUTOMATION AND ORCHESTRATION</h1>
+        <div style="font-size: 22px; color: #ccc; margin-top: 18px; font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">SOAR PLATFORM HELPS SECURITY OPERATIONS CENTERS MANAGE THE GROWING VOLUME OF ALERTS MORE EFFICIENTLY BY AUTOMATING TIME</div>
+      </div>
+    </section>
+    <div style="background: #000; color: #fff; width: 100%;">
+      <section style="background: #000; padding: 80px 60px;">
+        <h2 style="font-size: 22px; color: #fff; font-family: 'Orbitron', sans-serif; margin-bottom: 18px; letter-spacing: 2px; text-align: left; max-width: 900px; margin-left: auto; margin-right: auto;">ORCHESTRATE. AUTOMATE</h2>
+        <p style="font-size: 15px; color: #bbb; line-height: 1.7; font-family: 'Orbitron', sans-serif; max-width: 900px; margin-left: auto; margin-right: auto; text-align: left;">Tracelay Supercharge security operation center with automated processes for any security use case, today. Easily build playbooks through a visual drag-and-drop interface that features thousands of automatable actions across security products, conditional paths, manual tasks and human approval for sensitive automations.</p>
+      </section>
+      <section style="background: #000; padding: 80px 60px;">
+        <h2 style="font-size: 22px; color: #fff; font-family: 'Orbitron', sans-serif; margin-bottom: 18px; letter-spacing: 2px; text-align: left; max-width: 900px; margin-left: auto; margin-right: auto;">RESPOND TO INCIDENTS IN MACHINE SPEED</h2>
+        <p style="font-size: 15px; color: #bbb; line-height: 1.7; font-family: 'Orbitron', sans-serif; max-width: 900px; margin-left: auto; margin-right: auto; text-align: left;">Security orchestration layer we use as a solution that comes with a library of plugins for the most-used technology and a set of pre-built workflows for common use cases, enabling us to easily connect our technology stack and automate across our security and IT processes.</p>
+      </section>
+      <section style="background: #000; padding: 80px 60px;">
+        <h2 style="font-size: 22px; color: #fff; font-family: 'Orbitron', sans-serif; margin-bottom: 18px; letter-spacing: 2px; text-align: left; max-width: 900px; margin-left: auto; margin-right: auto;">COORDINATE INVESTIGATIONS</h2>
+        <p style="font-size: 15px; color: #bbb; line-height: 1.7; font-family: 'Orbitron', sans-serif; max-width: 900px; margin-left: auto; margin-right: auto; text-align: left;">By pairing automation with orchestration, we can set up rules to handle some of the most common events as soon as they occur. For instance, we can configure the software to check network traffic against a regularly updated list of malicious domains. If a machine in our environment repeatedly attempts to contact one of these domains, the software can automatically quarantine it until an analyst is available to investigate. In the meantime, the rest of the network is protected from the suspicious endpoint. Incident investigation and other security processes can grind to a halt when teams aren’t able to collaborate easily, such as when teams throughout an organization store data in different formats and use different software. SOAR helps you eliminate these barriers to collaboration. Sets of rules & actions called playbooks enable SOAR platforms to take action automatically when a particular kind of incident occurs. Using this functionality, you can set up automated responses for the most common incident types.</p>
+      </section>
+      <section style="display: flex; min-height: 340px;">
+        <div style="flex: 1; background: url('validate.png'), #666; background-size: cover; background-repeat: repeat; min-height: 340px;"></div>
+        <div style="flex: 1; background: #000; display: flex; flex-direction: column; justify-content: center; padding: 48px 40px; min-height: 340px;">
+          <h2 style="font-size: 22px; color: #fff; font-family: 'Orbitron', sans-serif; margin-bottom: 24px; letter-spacing: 2px;">VALIDATE THREATS USING LOOKUPS</h2>
+          <ul style="list-style: disc inside; color: #fff; font-size: 15px; line-height: 2; font-family: 'Orbitron', sans-serif; padding-left: 0;">
+            <li style="margin-bottom: 12px;">Response is the last phase in the event pipeline. Any event reaching this point has become a confirmed alert that requires action. Cross-verification of the threat has already been performed, so action must be taken to counter the threat.</li>
+            <li style="margin-bottom: 12px;">SOAR is not here to replace humans, as there are certain aspects of cyber security work best understood and contextualized by humans, rather than machines.</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+    <!-- Add more sections as needed -->
+  </main>
+  <footer>
+    <div class="footer-top">
+      <div class="footer-logo">
+        <svg class="footer-logo-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#ffffff" stroke-width="3">
+          <path d="M100,70 Q100,90 80,100 Q100,110 100,130 Q100,110 120,100 Q100,90 100,70 Z" fill="none" />
+          <g transform="rotate(0, 100, 100)">
+            <ellipse cx="100" cy="100" rx="60" ry="30" />
+          </g>
+          <g transform="rotate(45, 100, 100)">
+            <ellipse cx="100" cy="100" rx="60" ry="30" />
+          </g>
+          <g transform="rotate(90, 100, 100)">
+            <ellipse cx="100" cy="100" rx="60" ry="30" />
+          </g>
+          <g transform="rotate(135, 100, 100)">
+            <ellipse cx="100" cy="100" rx="60" ry="30" />
+          </g>
+        </svg>
+        <span class="footer-logo-text">Loghive</span>
+      </div>
+      <div class="footer-content">
+        <div>
+          <h4>About</h4>
+          <a href="#">Overview</a>
+          <a href="#">Who We Are</a>
+          <a href="#">Careers</a>
+          <a href="#">Contact</a>
+          <a href="#">Training</a>
+        </div>
+        <div>
+          <h4>Resources</h4>
+          <a href="#">Blog</a>
+          <a href="#">Events</a>
+          <a href="#">Case Study</a>
+          <a href="#">FAQ</a>
+        </div>
+      </div>
+      <div class="social-icons">
+        <div class="social-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </div>
+        <div class="social-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </div>
+        <div class="social-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html> 
